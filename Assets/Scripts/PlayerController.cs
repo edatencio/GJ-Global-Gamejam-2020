@@ -1,6 +1,5 @@
 using UnityEngine;
 using NaughtyAttributes;
-using Surge;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,17 +9,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("Settings")] private float jumpForce;
     [SerializeField, BoxGroup("Settings")] private float movementSpeed;
     [SerializeField, BoxGroup("Settings")] private float gravityForce;
+    [SerializeField, BoxGroup("Settings")] private LayerMask groundLayer;
+    [SerializeField, BoxGroup("Settings")] private LayerMask fallThroughPlatformsLayer;
     [SerializeField, BoxGroup("References")] private new Rigidbody rigidbody;
     [SerializeField, BoxGroup("References")] private Transform groundCheck;
-    [SerializeField, BoxGroup("References")] private LayerMask groundLayer;
 
-    private bool previousIsGrounded;
+    private LayerMask startLayer;
+    private Collider currentGround;
+    private float targetHeight;
 
     /*************************************************************************************************
     *** Start
     *************************************************************************************************/
     private void Start()
     {
+        startLayer = gameObject.layer;
     }
 
     /*************************************************************************************************
@@ -29,26 +32,34 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         ProcessInput();
-
         FlipSprite();
+        FallThroughPlatforms();
     }
 
-    /*************************************************************************************************
-    *** FixedUpdate
-    *************************************************************************************************/
     private void FixedUpdate()
     {
         IsGrounded = Physics.CheckSphere(groundCheck.position, 0.1f, groundLayer);
     }
 
     /*************************************************************************************************
+    *** OnCollision
+    *************************************************************************************************/
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == groundLayer.layer())
+            currentGround = collision.collider;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider == currentGround)
+            currentGround = null;
+    }
+
+    /*************************************************************************************************
     *** Properties
     *************************************************************************************************/
-    public bool IsGrounded
-    {
-        get;
-        private set;
-    }
+    public bool IsGrounded { get; private set; }
 
     /*************************************************************************************************
     *** Methods
@@ -61,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
         if (IsGrounded)
         {
-            if (CustomInput.Jump)
+            if (!CustomInput.Down && CustomInput.Jump)
                 velocity.y = jumpForce;
         }
         else
@@ -88,5 +99,27 @@ public class PlayerController : MonoBehaviour
             scale.x = 1;
 
         transform.localScale = scale;
+    }
+
+    private void FallThroughPlatforms()
+    {
+        bool jumping = rigidbody.velocity.y > 1f;
+        bool button = IsGrounded && CustomInput.Down && CustomInput.Jump;
+
+        if (jumping)
+            gameObject.layer = fallThroughPlatformsLayer.layer();
+        else if (targetHeight == 0f)
+            gameObject.layer = startLayer;
+
+        if (button)
+        {
+            targetHeight = transform.position.y - (transform.localScale.y + currentGround.bounds.size.y);
+            gameObject.layer = fallThroughPlatformsLayer.layer();
+        }
+        else if (targetHeight != 0f && transform.position.y <= targetHeight)
+        {
+            targetHeight = 0f;
+            gameObject.layer = startLayer;
+        }
     }
 }
