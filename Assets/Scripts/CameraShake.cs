@@ -6,7 +6,7 @@ public class CameraShake : MonoBehaviour
     [SerializeField] private float duration = 0.25f;
     [SerializeField] private float amount = 0.7f;
     [SerializeField] private float decreaseFactor = 1.0f;
-    [SerializeField] private bool startOnEnable;
+    [SerializeField] private bool shakeOnEnable;
 
     private Vector3 startPosition;
     private float shakeDuration;
@@ -15,7 +15,7 @@ public class CameraShake : MonoBehaviour
     {
         startPosition = transform.localPosition;
 
-        if (startOnEnable)
+        if (shakeOnEnable)
             Run();
     }
 

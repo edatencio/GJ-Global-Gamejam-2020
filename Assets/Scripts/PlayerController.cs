@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         ProcessInput();
-        FlipSprite();
         FallThroughPlatforms();
         ParticleSystems();
     }
@@ -91,18 +90,6 @@ public class PlayerController : MonoBehaviour
         rigidbody.velocity = velocity;
     }
 
-    private void FlipSprite()
-    {
-        Vector3 scale = transform.localScale;
-
-        if (rigidbody.velocity.x < -1f)
-            scale.x = -1;
-        else if (rigidbody.velocity.x > 1f)
-            scale.x = 1;
-
-        transform.localScale = scale;
-    }
-
     private void FallThroughPlatforms()
     {
         bool jumping = rigidbody.velocity.y > 1f;
@@ -136,5 +123,17 @@ public class PlayerController : MonoBehaviour
         {
             runParticleSystem.Stop();
         }
+    }
+
+    [Button]
+    private void Hurt()
+    {
+        GetComponent<Health>().Hurt();
+    }
+
+    [Button]
+    private void Cure()
+    {
+        GetComponent<Health>().Cure();
     }
 }
