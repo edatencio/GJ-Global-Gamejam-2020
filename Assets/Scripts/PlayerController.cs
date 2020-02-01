@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("Settings")] private LayerMask fallThroughPlatformsLayer;
     [SerializeField, BoxGroup("References")] private new Rigidbody rigidbody;
     [SerializeField, BoxGroup("References")] private Transform groundCheck;
+    [SerializeField, BoxGroup("References")] private ParticleSystem runParticleSystem;
 
     private LayerMask startLayer;
     private Collider currentGround;
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
         ProcessInput();
         FlipSprite();
         FallThroughPlatforms();
+        ParticleSystems();
     }
 
     private void FixedUpdate()
@@ -120,6 +122,19 @@ public class PlayerController : MonoBehaviour
         {
             targetHeight = 0f;
             gameObject.layer = startLayer;
+        }
+    }
+
+    private void ParticleSystems()
+    {
+        if (Mathf.Abs(rigidbody.velocity.x) > 0f && IsGrounded)
+        {
+            if (!runParticleSystem.isPlaying)
+                runParticleSystem.Play();
+        }
+        else if (runParticleSystem.isPlaying)
+        {
+            runParticleSystem.Stop();
         }
     }
 }
