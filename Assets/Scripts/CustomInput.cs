@@ -9,4 +9,6 @@ public static class CustomInput
     public static bool Right { get { return Input.GetAxisRaw("Horizontal") > 0; } }
 
     public static bool Left { get { return Input.GetAxisRaw("Horizontal") < 0; } }
+
+    public static bool Repair { get { return Input.GetKeyDown(KeyCode.Return); } }
 }

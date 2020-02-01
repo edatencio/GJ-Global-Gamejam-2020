@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - FxTemporaire
+  - Enemy
+  - Garra
+  - techo
   layers:
   - Default
   - TransparentFX

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using NaughtyAttributes;
 
 public class Health : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class Health : MonoBehaviour
     [SerializeField] private UnityEvent onCure;
     [SerializeField] private UnityEvent onDeath;
 
-    private int _lives;
+    [ShowNonSerializedField] private int _lives;
 
     /*************************************************************************************************
     *** Start
@@ -43,10 +44,10 @@ public class Health : MonoBehaviour
     {
         Lives -= amount;
 
+        onHurt.Invoke();
+
         if (Lives == 0)
             onDeath.Invoke();
-        else
-            onHurt.Invoke();
     }
 
     public void Cure()

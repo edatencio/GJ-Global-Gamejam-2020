@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("References")] private new Rigidbody rigidbody;
     [SerializeField, BoxGroup("References")] private Transform groundCheck;
     [SerializeField, BoxGroup("References")] private ParticleSystem runParticleSystem;
+    [SerializeField, BoxGroup("References")] private Health health;
 
     private LayerMask startLayer;
     private Collider currentGround;
@@ -49,6 +50,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.layer == groundLayer.layer())
             currentGround = collision.collider;
+
+        if (collision.gameObject.CompareTag("Laser"))
+        {
+            Destroy(collision.gameObject);
+            health.Hurt();
+        }
     }
 
     private void OnCollisionExit(Collision collision)
