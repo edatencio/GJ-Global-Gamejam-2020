@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         ProcessInput();
 
-        //FlipSprite();
+        FlipSprite();
     }
 
     /*************************************************************************************************
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 scale = transform.localScale;
 
-        if (rigidbody.velocity.x < 1f)
+        if (rigidbody.velocity.x < -1f)
             scale.x = -1;
         else if (rigidbody.velocity.x > 1f)
             scale.x = 1;
