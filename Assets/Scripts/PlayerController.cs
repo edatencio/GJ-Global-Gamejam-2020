@@ -1,5 +1,6 @@
 using UnityEngine;
 using NaughtyAttributes;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("Settings")] private float jumpForce;
     [SerializeField, BoxGroup("Settings")] private float movementSpeed;
     [SerializeField, BoxGroup("Settings")] private float gravityForce;
+    [SerializeField, BoxGroup("Settings")] private float gooStunTime;
     [SerializeField, BoxGroup("Settings")] private LayerMask groundLayer;
     [SerializeField, BoxGroup("Settings")] private LayerMask fallThroughPlatformsLayer;
     [SerializeField, BoxGroup("References")] private new Rigidbody rigidbody;
@@ -19,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private LayerMask startLayer;
     private Collider currentGround;
     private float targetHeight;
+    private bool stunned;
 
     /*************************************************************************************************
     *** Start
@@ -33,9 +36,12 @@ public class PlayerController : MonoBehaviour
     *************************************************************************************************/
     private void Update()
     {
-        ProcessInput();
-        FallThroughPlatforms();
-        ParticleSystems();
+        if (!stunned)
+        {
+            ProcessInput();
+            FallThroughPlatforms();
+            ParticleSystems();
+        }
     }
 
     private void FixedUpdate()
@@ -48,14 +54,20 @@ public class PlayerController : MonoBehaviour
     *************************************************************************************************/
     private void OnCollisionEnter(Collision collision)
     {
+        // Ground
         if (collision.gameObject.layer == groundLayer.layer())
             currentGround = collision.collider;
 
+        // Enemy laser
         if (collision.gameObject.CompareTag("Laser"))
         {
             Destroy(collision.gameObject);
             health.Hurt();
         }
+
+        // Enemy goo
+        if (collision.gameObject.CompareTag("Goo"))
+            StartCoroutine(Stun(collision.gameObject));
     }
 
     private void OnCollisionExit(Collision collision)
@@ -130,6 +142,14 @@ public class PlayerController : MonoBehaviour
         {
             runParticleSystem.Stop();
         }
+    }
+
+    private IEnumerator Stun(GameObject source)
+    {
+        stunned = true;
+        yield return new WaitForSeconds(gooStunTime);
+        stunned = false;
+        Destroy(source);
     }
 
     [Button]

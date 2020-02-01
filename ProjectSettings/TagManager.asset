@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Garra
   - techo
+  - Laser
+  - Goo
   layers:
   - Default
   - TransparentFX
