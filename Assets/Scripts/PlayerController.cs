@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("References")] private Transform groundCheck;
     [SerializeField, BoxGroup("References")] private ParticleSystem runParticleSystem;
     [SerializeField, BoxGroup("References")] private Health health;
+    [SerializeField, BoxGroup("References")] private Animator animator;
 
     private LayerMask startLayer;
     private Collider currentGround;
@@ -42,11 +43,13 @@ public class PlayerController : MonoBehaviour
             FallThroughPlatforms();
             ParticleSystems();
         }
+
+        UpdateAnimator();
     }
 
     private void FixedUpdate()
     {
-        IsGrounded = Physics.CheckSphere(groundCheck.position, 0.1f, groundLayer);
+        IsGrounded = Physics.CheckSphere(groundCheck.position, 0.25f, groundLayer);
     }
 
     /*************************************************************************************************
@@ -81,6 +84,9 @@ public class PlayerController : MonoBehaviour
     *************************************************************************************************/
     public bool IsGrounded { get; private set; }
 
+    [ShowNativeProperty]
+    public Vector3 vel { get { return rigidbody.velocity; } }
+
     /*************************************************************************************************
     *** Methods
     *************************************************************************************************/
@@ -93,7 +99,10 @@ public class PlayerController : MonoBehaviour
         if (IsGrounded)
         {
             if (!CustomInput.Down && CustomInput.Jump)
+            {
                 velocity.y = jumpForce;
+                animator.SetTrigger("Jump");
+            }
         }
         else
         {
@@ -147,9 +156,30 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Stun(GameObject source)
     {
         stunned = true;
+        animator.SetBool("TrappedInGoo", true);
         yield return new WaitForSeconds(gooStunTime);
+        animator.SetBool("TrappedInGoo", false);
         stunned = false;
         Destroy(source);
+    }
+
+    private IEnumerator Jump()
+    {
+        yield return new WaitForSeconds(0.1f);
+        animator.SetTrigger("Jump");
+        rigidbody.velocity = rigidbody.velocity.With(y: jumpForce);
+    }
+
+    private void UpdateAnimator()
+    {
+        animator.SetFloat("Velocity X", Mathf.Abs(rigidbody.velocity.x));
+        animator.SetFloat("Velocity Y", rigidbody.velocity.y);
+
+        bool crouch = IsGrounded && CustomInput.Down;
+        animator.SetBool("Crouch", crouch);
+
+        if (crouch)
+            rigidbody.velocity = rigidbody.velocity.With(x: 0f);
     }
 
     [Button]
