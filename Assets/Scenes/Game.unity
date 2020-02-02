@@ -1404,8 +1404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bias: 1.18
-  strength: 0.05
-  maxStrength: 2
+  strength: 0.025
+  maxStrength: 1.5
   axis: 1
   rigidbody: {fileID: 1947760060}
 --- !u!114 &891303085
