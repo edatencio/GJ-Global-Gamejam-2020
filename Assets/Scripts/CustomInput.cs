@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class CustomInput
 {
-    public static bool Jump { get { return Input.GetButtonDown("Jump"); } }
+    public static bool Jump { get { return Input.GetAxisRaw("Vertical") > 0 && Input.GetButtonDown("Vertical"); } }
 
     public static bool Down { get { return Input.GetAxisRaw("Vertical") < 0; } }
 
@@ -10,5 +10,5 @@ public static class CustomInput
 
     public static bool Left { get { return Input.GetAxisRaw("Horizontal") < 0; } }
 
-    public static bool Repair { get { return Input.GetKeyDown(KeyCode.Return); } }
+    public static bool Repair { get { return Input.GetButtonDown("Jump"); } }
 }
