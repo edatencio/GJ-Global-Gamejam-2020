@@ -19,7 +19,7 @@ public class Lights : MonoBehaviour
     private float playerLightIntensity;
     private float directionalLightIntensity;
     private float environmentLightsIntensity;
-    private float timer;
+    [ShowNonSerializedField] private float timer;
     private bool on;
 
     /*************************************************************************************************
@@ -39,7 +39,7 @@ public class Lights : MonoBehaviour
     *************************************************************************************************/
     private void Update()
     {
-        if (timer == 0)
+        if (timer <= 0f)
         {
             timer = Random.Range(randomRange.x, randomRange.y);
 

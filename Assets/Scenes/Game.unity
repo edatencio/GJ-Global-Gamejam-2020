@@ -7303,6 +7303,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   rigidbody: {fileID: 1947760060}
+  triggerCollider: {fileID: 1947760062}
   collider: {fileID: 1947760057}
   groundCheck: {fileID: 2110641583}
   runParticleSystem: {fileID: 4512169321848488096}
