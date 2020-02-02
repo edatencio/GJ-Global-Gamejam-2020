@@ -2023,6 +2023,7 @@ MonoBehaviour:
   contador: 0
   randomNumber: 0
   roof: {fileID: 1237447047}
+  oleadas: []
 --- !u!4 &439298809
 Transform:
   m_ObjectHideFlags: 0
