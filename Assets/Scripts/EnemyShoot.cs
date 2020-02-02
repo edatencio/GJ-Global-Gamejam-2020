@@ -5,7 +5,6 @@ public class EnemyShoot : MonoBehaviour
 {
     public GameObject laserPrefab;
     public Transform cannon;
-    public float viewDistance;
     public float repeatRate;
     [ReadOnly] public bool reparado;
     public GameObject garraPrefab;
@@ -32,10 +31,10 @@ public class EnemyShoot : MonoBehaviour
         RaycastHit hit;
         Vector3 dirjugador = new Vector3(cannon.position.x - gameObject.transform.position.x, 0f, 0f);
 
-        Debug.DrawRay(transform.position, dirjugador * viewDistance, Color.blue);
+        Debug.DrawRay(transform.position, dirjugador * 10f, Color.blue);
         if (reparado == false)
         {
-            if (Physics.Raycast(transform.position, dirjugador, out hit, viewDistance))
+            if (Physics.Raycast(transform.position, dirjugador, out hit))
             {
                 if (hit.collider.CompareTag("Player"))
                 {

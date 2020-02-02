@@ -45,7 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06e40611599ae941afd9c3490fc019d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  speed: 10
   jugador: {fileID: 0}
 --- !u!135 &-2648823723827230052
 SphereCollider:
@@ -58,8 +61,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.28
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.69
+  m_Center: {x: 0.39, y: 0, z: 0}
 --- !u!1 &5727123443348851487
 GameObject:
   m_ObjectHideFlags: 0
