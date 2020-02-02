@@ -31,7 +31,8 @@ public class EnemyMovement : MonoBehaviour
                 transform.Translate(new Vector3(-vel * Time.deltaTime, 0f, 0f));
                 transform.localScale = transform.localScale.With(x: -scaleX);
             }
-            if (i > ran)
+
+            if (i > ran && !enemyShoot.PlayerOnSight)
             {
                 back = !back;
                 i = 0;

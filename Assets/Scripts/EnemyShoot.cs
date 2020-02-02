@@ -9,7 +9,7 @@ public class EnemyShoot : MonoBehaviour
     [ReadOnly] public bool reparado;
     public GameObject garraPrefab;
     [ReadOnly] public GameObject roof;
-
+    [SerializeField] private LayerMask playerLayer;
     private float timerDisparo;
     private new Collider collider;
     private new Rigidbody rigidbody;
@@ -34,21 +34,23 @@ public class EnemyShoot : MonoBehaviour
         Debug.DrawRay(transform.position, dirjugador * 10f, Color.blue);
         if (reparado == false)
         {
-            if (Physics.Raycast(transform.position, dirjugador, out hit))
+            PlayerOnSight = Physics.Raycast(transform.position, dirjugador, out hit, 100f, playerLayer.layer()) && hit.collider.CompareTag("Player");
+
+            if (PlayerOnSight)
             {
-                if (hit.collider.CompareTag("Player"))
+                timerDisparo = timerDisparo + Time.deltaTime;
+                if (timerDisparo > repeatRate)
                 {
-                    timerDisparo = timerDisparo + Time.deltaTime;
-                    if (timerDisparo > repeatRate)
-                    {
-                        animator.SetTrigger("ataco");
-                        Instantiate(laserPrefab, cannon.position, transform.rotation);
-                        timerDisparo = 0;
-                    }
+                    animator.SetTrigger("ataco");
+                    Instantiate(laserPrefab, cannon.position, transform.rotation);
+                    timerDisparo = 0;
                 }
             }
         }
     }
+
+    [ShowNativeProperty]
+    public bool PlayerOnSight { get; private set; }
 
     private void OnTriggerEnter(Collider other)
     {
