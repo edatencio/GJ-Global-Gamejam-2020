@@ -6054,12 +6054,14 @@ MonoBehaviour:
   laserPrefab: {fileID: 600998856560611448, guid: a3196bb2849e08349b31532516523fbb,
     type: 3}
   cannon: {fileID: 8466081687595422465}
-  viewDistance: 10
   repeatRate: 1.3
   reparado: 0
   garraPrefab: {fileID: 62811025947938247, guid: 826d979a55fad4149a668ad2d1de6425,
     type: 3}
   roof: {fileID: 0}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   animator: {fileID: 2992926637072480041}
 --- !u!54 &8466081687998756077
 Rigidbody:

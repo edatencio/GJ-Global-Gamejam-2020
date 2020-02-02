@@ -1,22 +1,7 @@
 fileFormatVersion: 2
-guid: 25831ad348082d14f912813e28ce58ef
+guid: 97bfbc4fc4d3d4a4d936cff91566889b
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -2566374953088052983
-    second: oleadas_0
-  - first:
-      213: 3396318689693300160
-    second: oleadas_1
-  - first:
-      213: -4144945966575312304
-    second: oleadas_2
-  - first:
-      213: -4833805842112936534
-    second: oleadas_3
-  - first:
-      213: -5094815433437026130
-    second: oleadas_4
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 10
   mipmaps:

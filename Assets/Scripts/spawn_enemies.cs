@@ -10,6 +10,7 @@ public class spawn_enemies : MonoBehaviour
     [ReadOnly] public int contador;
     [ReadOnly] public float randomNumber;
     [SerializeField] private GameObject roof;
+    public GameObject[] oleadas;
 
     private float timer;
     private int waves;
@@ -20,9 +21,10 @@ public class spawn_enemies : MonoBehaviour
         tiempoDeSpawn = 3;
         timer = 0;
         int i;
-        for (i = 0; i < 3; i++)
+        for (i = 0; i <= 3; i++)
         {
             musicas[i].SetActive(false);
+            oleadas[i].SetActive(false);
         }
         contador = 0;
     }
@@ -35,6 +37,7 @@ public class spawn_enemies : MonoBehaviour
             /*      ****    WAVE 1  ****    */
             case 0:
                 musicas[0].SetActive(true);
+                oleadas[0].SetActive(true);
                 tiempoDeSpawn = 10;
                 if (timer > tiempoDeSpawn && contador < 17)
                 {
@@ -71,6 +74,7 @@ public class spawn_enemies : MonoBehaviour
             /*  ****    WAVE 2  ****    */
             case 1:
                 musicas[1].SetActive(true);
+                oleadas[1].SetActive(true);
                 tiempoDeSpawn = 9;
                 if (timer > tiempoDeSpawn && contador < 19)
                 {
@@ -111,6 +115,7 @@ public class spawn_enemies : MonoBehaviour
             /*  ****    WAVE 3  ****    */
             case 2:
                 musicas[2].SetActive(true);
+                oleadas[2].SetActive(true);
                 tiempoDeSpawn = 6;
                 if (timer > tiempoDeSpawn && contador < 29)
                 {
@@ -154,6 +159,7 @@ public class spawn_enemies : MonoBehaviour
             /*  ****    WAVE 4  ****    */
             case 3:
                 musicas[3].SetActive(true);
+                oleadas[3].SetActive(true);
                 tiempoDeSpawn = 5;
                 if (timer > tiempoDeSpawn && contador < 35)
                 {

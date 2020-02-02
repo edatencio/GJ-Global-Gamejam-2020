@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using NaughtyAttributes;
 using Surge;
 
@@ -11,6 +12,8 @@ public class Lights : MonoBehaviour
     [SerializeField] private Light playerLight;
     [SerializeField] private Light directionalLight;
     [SerializeField, ReorderableList] private Light[] environmentLights;
+    [SerializeField] private UnityEvent onTurnOn;
+    [SerializeField] private UnityEvent onTurnOff;
 
     private float playerLightIntensity;
     private float directionalLightIntensity;
@@ -49,6 +52,7 @@ public class Lights : MonoBehaviour
             Tween.Value(playerLightIntensity, 0f, (value) => playerLight.intensity = value, duration, 0f);
             Tween.Value(0f, directionalLightIntensity, (value) => directionalLight.intensity = value, duration, 0f);
             Tween.Value(0f, environmentLightsIntensity, SetEnvironmentLightsIntensity, duration, 0f);
+            onTurnOn.Invoke();
         }
     }
 
@@ -60,6 +64,7 @@ public class Lights : MonoBehaviour
             Tween.Value(0f, playerLightIntensity, (value) => playerLight.intensity = value, duration, 0f);
             Tween.Value(directionalLightIntensity, 0f, (value) => directionalLight.intensity = value, duration, 0f);
             Tween.Value(environmentLightsIntensity, 0f, SetEnvironmentLightsIntensity, duration, 0f);
+            onTurnOff.Invoke();
         }
     }
 
