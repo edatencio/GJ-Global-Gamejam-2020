@@ -2255,6 +2255,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: LoadScene
+  changeWithInput: 1
+  changeWithAnyInput: 0
 --- !u!4 &1840330109
 Transform:
   m_ObjectHideFlags: 0

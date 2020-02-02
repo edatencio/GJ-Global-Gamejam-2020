@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("References")] private new Collider collider;
     [SerializeField, BoxGroup("References")] private Transform groundCheck;
     [SerializeField, BoxGroup("References")] private ParticleSystem runParticleSystem;
+    [SerializeField, BoxGroup("References")] private ParticleSystem deathParticleSystem;
     [SerializeField, BoxGroup("References")] private Health health;
     [SerializeField, BoxGroup("References")] private Animator animator;
 
@@ -197,6 +198,11 @@ public class PlayerController : MonoBehaviour
 
         if (crouch)
             rigidbody.velocity = rigidbody.velocity.With(x: 0f);
+    }
+
+    public void InstantiateDeathParticles()
+    {
+        Instantiate(deathParticleSystem, transform.position, Quaternion.identity);
     }
 
     [Button]

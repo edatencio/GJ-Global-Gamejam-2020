@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using NaughtyAttributes;
 
 public class spawn_enemies : MonoBehaviour
@@ -12,6 +13,7 @@ public class spawn_enemies : MonoBehaviour
     [SerializeField] private GameObject roof;
     public GameObject[] oleadas;
 
+    [SerializeField] private UnityEvent onGameFinished;
     private float timer;
     private int waves;
 
@@ -200,11 +202,11 @@ public class spawn_enemies : MonoBehaviour
                     contador = 0;
                     waves = 4;
                     musicas[3].SetActive(false);
+                    onGameFinished.Invoke();
                 }
                 break;
 
             case 4:
-                /*      GANAR   */
                 break;
         }
     }

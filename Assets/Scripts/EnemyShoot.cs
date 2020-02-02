@@ -34,7 +34,7 @@ public class EnemyShoot : MonoBehaviour
         Debug.DrawRay(transform.position, dirjugador * 10f, Color.blue);
         if (reparado == false)
         {
-            PlayerOnSight = Physics.Raycast(transform.position, dirjugador, out hit, 100f, playerLayer.layer()) && hit.collider.CompareTag("Player");
+            PlayerOnSight = Physics.Raycast(transform.position, dirjugador, out hit, 100f, playerLayer) && hit.collider.CompareTag("Player");
 
             if (PlayerOnSight)
             {
