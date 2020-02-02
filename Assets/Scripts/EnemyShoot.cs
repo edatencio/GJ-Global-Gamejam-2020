@@ -8,14 +8,16 @@ public class EnemyShoot : MonoBehaviour
     public float viewDistance;
     public float repeatRate;
     [ReadOnly] public bool reparado;
-    public GameObject garra;
-    public GameObject roof;
+    public GameObject garraPrefab;
+    [ReadOnly] public GameObject roof;
 
     private float timerDisparo;
     private new Collider collider;
     private new Rigidbody rigidbody;
     private bool dead;
     [SerializeField] private Animator animator;
+
+    private GameObject garra;
 
     private void Start()
     {
@@ -69,7 +71,7 @@ public class EnemyShoot : MonoBehaviour
             Vector3 arriba = new Vector3(transform.position.x, roof.transform.position.y - transform.position.y + 10f, 0f);
             reparado = true;
             animator.SetTrigger("reparado");
-            garra = Instantiate(garra, arriba, transform.rotation);
+            garra = Instantiate(garraPrefab, arriba, transform.rotation);
             garra.GetComponent<GarraController>().enemyToGrab = gameObject;
         }
     }
