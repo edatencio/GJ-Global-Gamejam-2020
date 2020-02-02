@@ -5241,7 +5241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f73c0e158ccfc479914db8a798bf51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLives: 2
+  maxLives: 4
   onHurt:
     m_PersistentCalls:
       m_Calls: []

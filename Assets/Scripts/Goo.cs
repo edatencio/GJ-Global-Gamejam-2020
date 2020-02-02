@@ -12,9 +12,15 @@ public class Goo : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private new Rigidbody rigidbody;
     [SerializeField, ReorderableList] private Collider[] colliders;
+    [SerializeField] private AudioClip[] fx_grasa;
+    [SerializeField] private AudioSource source;
 
     private float currentVelocityY;
     private bool once;
+    private void Start()
+    {
+        source.PlayOneShot(fx_grasa[0]);
+    }
 
     /*************************************************************************************************
     *** Update
@@ -55,5 +61,10 @@ public class Goo : MonoBehaviour
         rigidbody.isKinematic = true;
 
         Tween.LocalScale(transform, transform.localScale.With(x: 0f), shrinkDuration, 0f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        source.PlayOneShot(fx_grasa[1]);
     }
 }
