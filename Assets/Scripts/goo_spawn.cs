@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,10 +19,7 @@ public class goo_spawn : MonoBehaviour
         if (i > 17)
         {
             i = 0;
-            Instantiate(grasa, puntos[Random.Range(0,5)].transform.position, transform.rotation);
+            Instantiate(grasa, puntos[Random.Range(0, puntos.Length)].transform.position, transform.rotation);
         }
     }
-
-
-
 }
