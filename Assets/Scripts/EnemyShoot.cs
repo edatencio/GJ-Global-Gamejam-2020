@@ -16,6 +16,7 @@ public class EnemyShoot : MonoBehaviour
     private new Collider collider;
     private new Rigidbody rigidbody;
     private bool dead;
+    [SerializeField] private Animator animator;
 
     private void Start()
     {
@@ -40,6 +41,7 @@ public class EnemyShoot : MonoBehaviour
                     timerDisparo = timerDisparo + Time.deltaTime;
                     if (timerDisparo > repeatRate)
                     {
+                        animator.SetTrigger("ataco");
                         Instantiate(laserPrefab, cannon.position, transform.rotation);
                         timerDisparo = 0;
                     }
@@ -67,6 +69,7 @@ public class EnemyShoot : MonoBehaviour
             rigidbody.isKinematic = true;
             Vector3 arriba = new Vector3(transform.position.x, roof.transform.position.y - transform.position.y, 0f);
             reparado = true;
+            animator.SetTrigger("reparado");
             Instantiate(garra, arriba, transform.rotation);
         }
     }
