@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("References")] private Transform groundCheck;
     [SerializeField, BoxGroup("References")] private ParticleSystem runParticleSystem;
     [SerializeField, BoxGroup("References")] private Health health;
+    [SerializeField, BoxGroup("References")] private Animator animator;
 
     private LayerMask startLayer;
     private Collider currentGround;
@@ -42,6 +43,8 @@ public class PlayerController : MonoBehaviour
             FallThroughPlatforms();
             ParticleSystems();
         }
+
+        UpdateAnimator();
     }
 
     private void FixedUpdate()
@@ -147,9 +150,16 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Stun(GameObject source)
     {
         stunned = true;
+        animator.SetBool("TrappedInGoo", true);
         yield return new WaitForSeconds(gooStunTime);
+        animator.SetBool("TrappedInGoo", false);
         stunned = false;
         Destroy(source);
+    }
+
+    private void UpdateAnimator()
+    {
+        animator.SetFloat("Velocity X", Mathf.Abs(rigidbody.velocity.x));
     }
 
     [Button]
