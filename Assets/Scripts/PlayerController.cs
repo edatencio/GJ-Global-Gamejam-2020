@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        IsGrounded = Physics.CheckSphere(groundCheck.position, 0.1f, groundLayer);
+        IsGrounded = Physics.CheckSphere(groundCheck.position, 0.25f, groundLayer);
     }
 
     /*************************************************************************************************
