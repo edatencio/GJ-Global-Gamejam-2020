@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GarraController : MonoBehaviour
 {
+    [SerializeField] private float speed;
     private bool bajando;
     public GameObject enemyToGrab;
 
@@ -14,11 +15,11 @@ public class GarraController : MonoBehaviour
     {
         if (bajando == true)
         {
-            transform.Translate(new Vector3(0f, 5 * -Time.deltaTime, 0f));
+            transform.Translate(new Vector3(0f, 5 * -Time.deltaTime * speed, 0f));
         }
         if (bajando == false)
         {
-            transform.Translate(new Vector3(0f, 7 * Time.deltaTime, 0f));
+            transform.Translate(new Vector3(0f, 7 * Time.deltaTime * speed, 0f));
             Destroy(gameObject, 7);
         }
     }

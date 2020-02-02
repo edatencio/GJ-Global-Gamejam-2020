@@ -68,7 +68,7 @@ public class EnemyShoot : MonoBehaviour
 
             collider.isTrigger = true;
             rigidbody.isKinematic = true;
-            Vector3 arriba = new Vector3(transform.position.x, roof.transform.position.y - transform.position.y + 10f, 0f);
+            Vector3 arriba = new Vector3(transform.position.x, roof.transform.position.y + 30f, 0f);
             reparado = true;
             animator.SetTrigger("reparado");
             garra = Instantiate(garraPrefab, arriba, transform.rotation);
