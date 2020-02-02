@@ -157,6 +157,7 @@ public class PlayerController : MonoBehaviour
     {
         stunned = true;
         animator.SetBool("TrappedInGoo", true);
+        runParticleSystem.Stop();
         yield return new WaitForSeconds(gooStunTime);
         animator.SetBool("TrappedInGoo", false);
         stunned = false;
