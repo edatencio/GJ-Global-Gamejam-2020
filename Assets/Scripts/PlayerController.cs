@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("Settings")] private LayerMask groundLayer;
     [SerializeField, BoxGroup("Settings")] private LayerMask fallThroughPlatformsLayer;
     [SerializeField, BoxGroup("References")] private new Rigidbody rigidbody;
+    [SerializeField, BoxGroup("References")] private new Collider collider;
     [SerializeField, BoxGroup("References")] private Transform groundCheck;
     [SerializeField, BoxGroup("References")] private ParticleSystem runParticleSystem;
     [SerializeField, BoxGroup("References")] private Health health;
@@ -130,7 +131,12 @@ public class PlayerController : MonoBehaviour
 
         if (button)
         {
-            targetHeight = transform.position.y - (transform.localScale.y + currentGround.bounds.size.y);
+            float playerPosition = transform.position.y;
+            float playerHeight = collider.bounds.size.y;
+            float groundBoundSize = currentGround.bounds.size.y;
+
+            targetHeight = playerPosition - (playerHeight + groundBoundSize);
+
             gameObject.layer = fallThroughPlatformsLayer.layer();
         }
         else if (targetHeight != 0f && transform.position.y <= targetHeight)
