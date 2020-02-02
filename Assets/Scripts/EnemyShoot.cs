@@ -5,12 +5,11 @@ public class EnemyShoot : MonoBehaviour
 {
     public GameObject laserPrefab;
     public Transform cannon;
-    public float viewDistance;
     public float repeatRate;
     [ReadOnly] public bool reparado;
     public GameObject garraPrefab;
     [ReadOnly] public GameObject roof;
-
+    [SerializeField] private LayerMask playerLayer;
     private float timerDisparo;
     private new Collider collider;
     private new Rigidbody rigidbody;
@@ -32,24 +31,26 @@ public class EnemyShoot : MonoBehaviour
         RaycastHit hit;
         Vector3 dirjugador = new Vector3(cannon.position.x - gameObject.transform.position.x, 0f, 0f);
 
-        Debug.DrawRay(transform.position, dirjugador * viewDistance, Color.blue);
+        Debug.DrawRay(transform.position, dirjugador * 10f, Color.blue);
         if (reparado == false)
         {
-            if (Physics.Raycast(transform.position, dirjugador, out hit, viewDistance))
+            PlayerOnSight = Physics.Raycast(transform.position, dirjugador, out hit, 100f, playerLayer.layer()) && hit.collider.CompareTag("Player");
+
+            if (PlayerOnSight)
             {
-                if (hit.collider.CompareTag("Player"))
+                timerDisparo = timerDisparo + Time.deltaTime;
+                if (timerDisparo > repeatRate)
                 {
-                    timerDisparo = timerDisparo + Time.deltaTime;
-                    if (timerDisparo > repeatRate)
-                    {
-                        animator.SetTrigger("ataco");
-                        Instantiate(laserPrefab, cannon.position, transform.rotation);
-                        timerDisparo = 0;
-                    }
+                    animator.SetTrigger("ataco");
+                    Instantiate(laserPrefab, cannon.position, transform.rotation);
+                    timerDisparo = 0;
                 }
             }
         }
     }
+
+    [ShowNativeProperty]
+    public bool PlayerOnSight { get; private set; }
 
     private void OnTriggerEnter(Collider other)
     {
