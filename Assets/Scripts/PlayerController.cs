@@ -84,6 +84,9 @@ public class PlayerController : MonoBehaviour
     *************************************************************************************************/
     public bool IsGrounded { get; private set; }
 
+    [ShowNativeProperty]
+    public Vector3 vel { get { return rigidbody.velocity; } }
+
     /*************************************************************************************************
     *** Methods
     *************************************************************************************************/
@@ -96,7 +99,10 @@ public class PlayerController : MonoBehaviour
         if (IsGrounded)
         {
             if (!CustomInput.Down && CustomInput.Jump)
+            {
                 velocity.y = jumpForce;
+                animator.SetTrigger("Jump");
+            }
         }
         else
         {
@@ -157,9 +163,23 @@ public class PlayerController : MonoBehaviour
         Destroy(source);
     }
 
+    private IEnumerator Jump()
+    {
+        yield return new WaitForSeconds(0.1f);
+        animator.SetTrigger("Jump");
+        rigidbody.velocity = rigidbody.velocity.With(y: jumpForce);
+    }
+
     private void UpdateAnimator()
     {
         animator.SetFloat("Velocity X", Mathf.Abs(rigidbody.velocity.x));
+        animator.SetFloat("Velocity Y", rigidbody.velocity.y);
+
+        bool crouch = IsGrounded && CustomInput.Down;
+        animator.SetBool("Crouch", crouch);
+
+        if (crouch)
+            rigidbody.velocity = rigidbody.velocity.With(x: 0f);
     }
 
     [Button]
