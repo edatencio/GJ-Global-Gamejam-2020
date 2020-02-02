@@ -5,7 +5,6 @@ public class EnemyShoot : MonoBehaviour
 {
     public GameObject laserPrefab;
     public Transform cannon;
-    public GameObject jugador;
     public float viewDistance;
     public float repeatRate;
     [ReadOnly] public bool reparado;
@@ -38,7 +37,6 @@ public class EnemyShoot : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Player"))
                 {
-                    Debug.Log("Te vi!");
                     timerDisparo = timerDisparo + Time.deltaTime;
                     if (timerDisparo > repeatRate)
                     {
@@ -53,7 +51,7 @@ public class EnemyShoot : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Garra"))
+        if (other.gameObject == garra)
             transform.SetParent(other.transform);
 
         if (other.CompareTag("techo"))
@@ -68,10 +66,11 @@ public class EnemyShoot : MonoBehaviour
 
             collider.isTrigger = true;
             rigidbody.isKinematic = true;
-            Vector3 arriba = new Vector3(transform.position.x, roof.transform.position.y - transform.position.y, 0f);
+            Vector3 arriba = new Vector3(transform.position.x, roof.transform.position.y - transform.position.y + 10f, 0f);
             reparado = true;
             animator.SetTrigger("reparado");
-            Instantiate(garra, arriba, transform.rotation);
+            garra = Instantiate(garra, arriba, transform.rotation);
+            garra.GetComponent<GarraController>().enemyToGrab = gameObject;
         }
     }
 }

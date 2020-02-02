@@ -3,6 +3,7 @@ using UnityEngine;
 public class GarraController : MonoBehaviour
 {
     private bool bajando;
+    public GameObject enemyToGrab;
 
     private void Start()
     {
@@ -24,9 +25,7 @@ public class GarraController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
-        {
+        if (other.gameObject == enemyToGrab)
             bajando = false;
-        }
     }
 }
