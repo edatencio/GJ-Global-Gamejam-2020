@@ -71,7 +71,15 @@ public class PlayerController : MonoBehaviour
 
         // Enemy goo
         if (collision.gameObject.CompareTag("Goo"))
-            StartCoroutine(Stun(collision.gameObject));
+        {
+            Goo goo = collision.gameObject.GetComponent<Goo>();
+
+            if (!goo.Activated)
+            {
+                goo.Activated = true;
+                StartCoroutine(Stun(goo));
+            }
+        }
     }
 
     private void OnCollisionExit(Collision collision)
@@ -159,15 +167,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator Stun(GameObject source)
+    private IEnumerator Stun(Goo goo)
     {
+        rigidbody.isKinematic = true;
         stunned = true;
         animator.SetBool("TrappedInGoo", true);
         runParticleSystem.Stop();
         yield return new WaitForSeconds(gooStunTime);
+        rigidbody.isKinematic = false;
         animator.SetBool("TrappedInGoo", false);
         stunned = false;
-        Destroy(source);
+        goo.Shrink();
     }
 
     private IEnumerator Jump()
