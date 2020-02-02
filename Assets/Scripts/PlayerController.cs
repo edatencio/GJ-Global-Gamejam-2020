@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("Settings")] private LayerMask groundLayer;
     [SerializeField, BoxGroup("Settings")] private LayerMask fallThroughPlatformsLayer;
     [SerializeField, BoxGroup("References")] private new Rigidbody rigidbody;
+    [SerializeField, BoxGroup("References")] private new Collider collider;
     [SerializeField, BoxGroup("References")] private Transform groundCheck;
     [SerializeField, BoxGroup("References")] private ParticleSystem runParticleSystem;
     [SerializeField, BoxGroup("References")] private Health health;
@@ -70,7 +71,15 @@ public class PlayerController : MonoBehaviour
 
         // Enemy goo
         if (collision.gameObject.CompareTag("Goo"))
-            StartCoroutine(Stun(collision.gameObject));
+        {
+            Goo goo = collision.gameObject.GetComponent<Goo>();
+
+            if (!goo.Activated)
+            {
+                goo.Activated = true;
+                StartCoroutine(Stun(goo));
+            }
+        }
     }
 
     private void OnCollisionExit(Collision collision)
@@ -130,7 +139,12 @@ public class PlayerController : MonoBehaviour
 
         if (button)
         {
-            targetHeight = transform.position.y - (transform.localScale.y + currentGround.bounds.size.y);
+            float playerPosition = transform.position.y;
+            float playerHeight = collider.bounds.size.y;
+            float groundBoundSize = currentGround.bounds.size.y;
+
+            targetHeight = playerPosition - (playerHeight + groundBoundSize);
+
             gameObject.layer = fallThroughPlatformsLayer.layer();
         }
         else if (targetHeight != 0f && transform.position.y <= targetHeight)
@@ -153,15 +167,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator Stun(GameObject source)
+    private IEnumerator Stun(Goo goo)
     {
+        rigidbody.isKinematic = true;
         stunned = true;
         animator.SetBool("TrappedInGoo", true);
         runParticleSystem.Stop();
         yield return new WaitForSeconds(gooStunTime);
+        rigidbody.isKinematic = false;
         animator.SetBool("TrappedInGoo", false);
         stunned = false;
-        Destroy(source);
+        goo.Shrink();
     }
 
     private IEnumerator Jump()
