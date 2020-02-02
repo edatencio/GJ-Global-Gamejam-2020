@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerRepair : MonoBehaviour
 {
     [SerializeField] private Animator animator;
+    [SerializeField] private AudioSource audioSource;
     private Health otherHealth;
 
     private void Update()
@@ -11,6 +12,7 @@ public class PlayerRepair : MonoBehaviour
         {
             animator.SetTrigger("Repair");
             otherHealth.Hurt();
+            audioSource.PlayOneShot(audioSource.clip);
         }
     }
 
