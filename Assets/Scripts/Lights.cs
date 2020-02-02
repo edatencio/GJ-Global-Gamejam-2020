@@ -8,6 +8,7 @@ public class Lights : MonoBehaviour
     /*************************************************************************************************
     *** Variables
     *************************************************************************************************/
+    [SerializeField, MinMaxSlider(0, 10)] private Vector2 randomRange;
     [SerializeField] private float duration;
     [SerializeField] private Light playerLight;
     [SerializeField] private Light directionalLight;
@@ -18,6 +19,8 @@ public class Lights : MonoBehaviour
     private float playerLightIntensity;
     private float directionalLightIntensity;
     private float environmentLightsIntensity;
+    private float timer;
+    private bool on;
 
     /*************************************************************************************************
     *** Start
@@ -28,6 +31,7 @@ public class Lights : MonoBehaviour
         directionalLightIntensity = directionalLight.intensity;
         environmentLightsIntensity = environmentLights[0].intensity;
         On();
+        timer = randomRange.y;
     }
 
     /*************************************************************************************************
@@ -35,6 +39,19 @@ public class Lights : MonoBehaviour
     *************************************************************************************************/
     private void Update()
     {
+        if (timer == 0)
+        {
+            timer = Random.Range(randomRange.x, randomRange.y);
+
+            if (!on)
+                On();
+            else
+                Off();
+        }
+        else
+        {
+            timer -= Time.deltaTime;
+        }
     }
 
     /*************************************************************************************************
@@ -53,6 +70,7 @@ public class Lights : MonoBehaviour
             Tween.Value(0f, directionalLightIntensity, (value) => directionalLight.intensity = value, duration, 0f);
             Tween.Value(0f, environmentLightsIntensity, SetEnvironmentLightsIntensity, duration, 0f);
             onTurnOn.Invoke();
+            on = true;
         }
     }
 
@@ -65,6 +83,7 @@ public class Lights : MonoBehaviour
             Tween.Value(directionalLightIntensity, 0f, (value) => directionalLight.intensity = value, duration, 0f);
             Tween.Value(environmentLightsIntensity, 0f, SetEnvironmentLightsIntensity, duration, 0f);
             onTurnOff.Invoke();
+            on = false;
         }
     }
 
