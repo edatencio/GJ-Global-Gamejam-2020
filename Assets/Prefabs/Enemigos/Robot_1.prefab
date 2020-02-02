@@ -5968,7 +5968,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8466081687595422466}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.8184783, y: 4.1322, z: 0}
+  m_LocalPosition: {x: 0.7075293, y: 3.6894975, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8466081687998756078}
@@ -6004,7 +6004,7 @@ Transform:
   m_GameObject: {fileID: 8466081687998756074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 8466081687595422465}
   - {fileID: 3218207478500001603}
@@ -6060,7 +6060,7 @@ MonoBehaviour:
   reparado: 0
   garra: {fileID: 62811025947938247, guid: 826d979a55fad4149a668ad2d1de6425, type: 3}
   roof: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 2992926637072480041}
 --- !u!54 &8466081687998756077
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6075,7 +6075,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 88
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!114 &8466081687998756076
 MonoBehaviour:

@@ -38,6 +38,7 @@ public class EnemyShoot : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Player"))
                 {
+                    Debug.Log("Te vi!");
                     timerDisparo = timerDisparo + Time.deltaTime;
                     if (timerDisparo > repeatRate)
                     {
