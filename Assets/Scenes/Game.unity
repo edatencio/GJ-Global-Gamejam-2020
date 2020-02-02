@@ -1571,7 +1571,7 @@ GameObject:
   - component: {fileID: 460151661}
   - component: {fileID: 460151660}
   - component: {fileID: 460151659}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1664,7 +1664,7 @@ GameObject:
   - component: {fileID: 487514525}
   - component: {fileID: 487514524}
   - component: {fileID: 487514523}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5153,6 +5153,9 @@ MonoBehaviour:
   reparado: 0
   garraPrefab: {fileID: 0}
   roof: {fileID: 1237447047}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
   animator: {fileID: 0}
 --- !u!114 &1947934899
 MonoBehaviour:
