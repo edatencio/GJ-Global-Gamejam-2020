@@ -6,6 +6,7 @@ public class ScaleByVelocity : MonoBehaviour
 
     public float bias = 1f;
     public float strength = 1f;
+    public float maxStrength;
     public Axis axis = Axis.Y;
 
     public new Rigidbody rigidbody;
@@ -20,21 +21,17 @@ public class ScaleByVelocity : MonoBehaviour
     private void Update()
     {
         var velocity = rigidbody.velocity.magnitude;
-
-        if (Mathf.Approximately(velocity, 0f))
-            return;
-
-        var amount = velocity * strength + bias;
+        var amount = Mathf.Clamp(velocity * strength + bias, 0f, maxStrength);
         var inverseAmount = (1f / amount) * startScale.magnitude;
 
         switch (axis)
         {
             case Axis.X:
-                transform.localScale = new Vector3(amount, inverseAmount, 1f);
+                transform.localScale = Vector3.MoveTowards(transform.localScale, new Vector3(amount, inverseAmount, 1f), Time.deltaTime);
                 return;
 
             case Axis.Y:
-                transform.localScale = new Vector3(inverseAmount, amount, 1f);
+                transform.localScale = Vector3.MoveTowards(transform.localScale, new Vector3(inverseAmount, amount, 1f), Time.deltaTime);
                 return;
         }
     }
